@@ -1,0 +1,32 @@
+h1 {
+   position: relative;
+   text-align: center;
+   color:blue
+}
+.button1 {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color:black;
+    background-color: lightgrey;
+    border: 2px;
+    border-radius: 8px;
+    box-shadow: 0 8px #999;
+}
+.button:hover {background-color: #45a049}
+.button:active {
+    background-color: #45a049;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+table {
+    border: 2px solid;
+    font-size: 6px;
+}
+a { text-decoration: none; }
+body {
+  background-image: url("./background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
