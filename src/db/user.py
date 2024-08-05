@@ -7,7 +7,9 @@ from sqlalchemy import Column, Integer, Date, String, ForeignKey, LargeBinary
 
 class User(Base):
     __tablename__ = 'users'
-
+    """
+        Definition of the table for users (see Role for roles)
+    """
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String, nullable=True)
     last_name = Column(String, index=True, nullable=False)

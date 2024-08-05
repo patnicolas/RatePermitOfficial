@@ -22,6 +22,9 @@ Review     List
 class PermitOfficial(Base):
     __tablename__ = 'permit_officials'
 
+    """
+           Definition of the table for building permit officials
+       """
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=False, index=True)
@@ -29,5 +32,4 @@ class PermitOfficial(Base):
     title = Column(String, nullable=False)
     department = Column(String, nullable=False, index=True)
     city = Column(String, nullable=False, index=True)
-    # reviews = relationship('Review', back_populates='permit_officials')
-    # Review.group = relationship('PermitOfficial', back_populates='reviews')
+

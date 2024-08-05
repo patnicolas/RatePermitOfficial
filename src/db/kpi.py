@@ -8,6 +8,9 @@ from sqlalchemy import Column, Integer, ForeignKey
 class KPI(Base):
     __tablename__ = 'kpis'
 
+    """
+        Definition of the table for KPI metrics
+    """
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     helpfulness = Column(Integer)
     consistency = Column(Integer)
