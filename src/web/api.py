@@ -6,9 +6,8 @@ from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from src.web.configparams import configuration_parameters
 from src.db.databasemanager import DatabaseManager
-from typing import Optional, Any
+from typing import Optional, AnyStr
 
 
 """
@@ -30,26 +29,29 @@ import os
 _dir = os.path.abspath(os.path.expanduser('templates'))
 templates = Jinja2Templates(directory=_dir)
 
+root_id='index'
+review_input_id='reviewinput'
+permit_officials_id='permitofficials'
 
 @app.get("/", response_class=HTMLResponse)
-async def root():
-    web_path = configuration_parameters['web_path']
-    with open("templates/index.html", 'r') as f:
+async def root() -> AnyStr:
+    """
+    Load the default landing page 'index.html'
+    @return: HTML content of the landing page
+    @rtype: str
+    """
+    with open(f"templates/{root_id}.html", 'r') as f:
         html_content = f.read()
     print("loaded index.html")
     return html_content
 
+@app.get(f"/{review_input_id}", response_class=HTMLResponse)
+async def query_review_input() -> AnyStr:
+    with open(f"templates/{review_input_id}.html", 'r') as f:
+        html_content = f.read()
+    return html_content
 
-def get_db() -> Optional[DatabaseManager]:
-    import logging
-    try:
-        return DatabaseManager.build()
-    except Exception as e:
-        logging.error(f'Cannot access database {str(e)}')
-        return None
-
-
-@app.get("/permitofficials", response_class=HTMLResponse)
+@app.get(f"/{permit_officials_id}", response_class=HTMLResponse)
 async def query_permit_officials(request: Request) -> templates.TemplateResponse:
     """
     Query the current list of permit officials for debugging purpose
@@ -65,10 +67,19 @@ async def query_permit_officials(request: Request) -> templates.TemplateResponse
         db_manager = DatabaseManager.build()
         permit_officials = db_manager.query(DatabaseManager.q_permit_officials, condition=PermitOfficial.id < 1000)
         return templates.TemplateResponse(
-            "/permitofficials.html",
-            {'request': request, 'permitofficials': permit_officials}
+            f"/{permit_officials_id}.html",
+            {'request': request, permit_officials_id: permit_officials}
         )
     except Exception as e:
         logging.error({str(e)})
         return templates.TemplateResponse("/index")
 
+""" ----------------------   Supporting helper methods ----------------------- """
+
+def __get_db() -> Optional[DatabaseManager]:
+    import logging
+    try:
+        return DatabaseManager.build()
+    except Exception as e:
+        logging.error(f'Cannot access database {str(e)}')
+        return None

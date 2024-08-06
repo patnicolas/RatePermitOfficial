@@ -68,14 +68,15 @@ Python interpreter and modules ...
 
 ## Implementation updates
 
-| Date     | Changes                                                                                                   |
-|:---------|:----------------------------------------------------------------------------------------------------------|
-| 07/18/24 | Review requirements and estimates                                                                         |
-| 07/20/24 | PostgreSQL database and Gitub project setup                                                               |    
-| 07/22/24 | Design schema for project.                                                                                |    
-| 07/25/24 | Implementation Reviews, KPI, Users, Permit officials & Roles tables.                                      |
-| 07/26/24 | Implementation of CRUD functions for tables                                                               |
-| 07/30/24 | Implementation of Fast API for loading building permits officials data                                    |
-| 07/31/24 | Implementation of index page with CSS style                                                               | 
-| 08/01/24 | 08/01/24                                                                                                  |
-| 08/02/24 | Implementation of join {Review, KPI, PermitOfficial} - Password Encryption.                                                                                                          |
+| Date     | Changes                                                                     |
+|:---------|:----------------------------------------------------------------------------|
+| 07/18/24 | Review requirements and estimates                                           |
+| 07/20/24 | PostgreSQL database and Gitub project setup                                 |    
+| 07/22/24 | Design schema for project.                                                  |    
+| 07/25/24 | Implementation Reviews, KPI, Users, Permit officials & Roles tables.        |
+| 07/26/24 | Implementation of CRUD functions for tables                                 |
+| 07/30/24 | Implementation of Fast API for loading building permits officials data      |
+| 07/31/24 | Implementation of index page with CSS style                                 | 
+| 08/01/24 | Implementation of permitofficials page                                      |
+| 08/02/24 | Implementation of join {Review, KPI, PermitOfficial} - Password Encryption. |                                                                                                        |
+| 08/05/24 | Javascript code to load list of existing building permit officials and select |

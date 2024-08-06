@@ -6,22 +6,55 @@
     <link rel="stylesheet" type="text/css" href="./static/style.css" />
     <title>Review input</title>
 </head>
-<body>
-<h4>Review input... </h4>
+<body style="margin: auto;width: 50%;">
 <br>
-     <form action='http://localhost:8080/reviewinput/' method="post" name="fileForm" enctype="multipart/form-data">
-         Permit No. <input id="permit_id" type="text" name="permit" style="color:red; width:14em; text-align:left;font-size: 0.8em;background-color:lightgrey;padding: 0.2em 0.2em;font-style: italic;" value="enter permit no ...." /><br><br>
-         <label>Select Permit official</label>
-         <select id="PermitOfficialDropdown" value="John Doe"></select><br>
-         <label>Key Performance Indicator <i>Enter value 1 to 5</i></i></label><br>
-         <label>Helpfulness</label><input id="helpfulness_id" type="number" min="1" max="5" step="1" value="1"/><br>
-         <label>Consistency</label><input id="consistency_id" type="number" min="1" max="5" step="1" value="1" /><br>
-         <label>Responsiveness</label><input id="responsiveness_id" type="number" min="1" max="5" step="1" value="1" /><br>
-         <label>Cost</label><input id="cost_id" type="number" min="1" max="5" step="1" value="1" /><br>
-         <label for="comment">Comment</label><br>
-         <textarea id="comment"></textarea><br>
-         <button id="submit_id" type="Submit">Submit</button>
-        </form>
+        <h1>Review input... </h1>
+
+<form action='http://localhost:8080/reviewinput/' method="post" name="fileForm" enctype="multipart/form-data">
+    <div style="margin: auto;width: 100%;">
+    <table style="font-size: 16px; border:3px;color:grey; background-color:#fffddb;width:420px">
+        <tr>
+            <td>Permit No. </td>
+            <td><input id="permit_id" type="text" name="permit" style="color:red; width:14em; text-align:left;font-size: 0.8em;background-color:lightgrey;padding: 0.2em 0.2em;font-style: italic;" value="enter permit no ...." /></td>
+        </tr>
+        <tr>
+            <td><label>Select Permit official</label></td>
+            <td><select id="PermitOfficialDropdown"></select></td>
+        </tr>
+        <tr>
+            <td>Key Performance Indicator</td>
+            <td><i>Enter value 1 to 5</i></td>
+        </tr>
+        <tr>
+            <td><label>Helpfulness</label></td>
+            <td><input id="helpfulness_id" type="number" min="1" max="5" step="1" value="1"/></td>
+        </tr>
+        <tr>
+            <td><label>Consistency</label></td>
+            <td><input id="consistency_id" type="number" min="1" max="5" step="1" value="1" /></td>
+        </tr>
+        <tr>
+            <td><label>Responsiveness</label></td>
+            <td><input id="responsiveness_id" type="number" min="1" max="5" step="1" value="1" /></td>
+        </tr>
+        <tr>
+            <td><label>Cost</label></td>
+            <td><input id="cost_id" type="number" min="1" max="5" step="1" value="1" /></td>
+        </tr>
+    </table>
+
+    <label>Comment</label><br>
+
+    <textarea id="comment" style="background-color:#fffddb;color:grey;font-size:14px;height:200px;width:400px;border-radius: 4px; padding: 6px 12px;margin: auto;">Enter comment up to 500 characters ....</textarea><br>
+        <table style="border:0px;">
+        <tr>
+            <td><button class="button1" id="submit_id" type="Submit">Submit</button></td>
+            <td><button class="button1" id="reset_id">Reset</button></td>
+        </tr>
+    </table>
+    </div>
+</form>
+
 
  <script type="text/javascript"  src="./static/script.js"></script>
 </body>

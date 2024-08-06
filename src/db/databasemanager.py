@@ -25,7 +25,7 @@ def load_password() -> AnyStr:
     from src.util.keyencryption import KeyEncryption
 
     key_encryption = KeyEncryption()
-    encrypted_password = ''
+    encrypted_password = b'gAAAAABmraC9-WtivAoSpMhPVIKP_Gam2GlisgzHp4hZHVRLQE09syHFUYPmVyiMvlMYsp14poJShCHutkfEdAzHoEWq7bNS3g=='
     return key_encryption.decrypt(encrypted_password)
 
 
