@@ -1,13 +1,12 @@
 _author__ = "Patrick Nicolas"
 __copyright__ = "Copyright 2024. All rights reserved."
 
-from fastapi import FastAPI, Request, UploadFile, File, Form, Depends
+from fastapi import FastAPI, Request
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from src.web.configparams import configuration_parameters
-from sqlalchemy.orm import Session
 from src.db.databasemanager import DatabaseManager
 from typing import Optional, Any
 
@@ -51,17 +50,16 @@ def get_db() -> Optional[DatabaseManager]:
 
 
 @app.get("/permitofficials", response_class=HTMLResponse)
-async def query_permit_officials(request: Request):
+async def query_permit_officials(request: Request) -> templates.TemplateResponse:
+    """
+    Query the current list of permit officials for debugging purpose
+    :param request: Web HTTP request
+    :type request: Request
+    :return: HTML response using Jinja2 template
+    :rtype: TemplateResponse
+    """
     from src.db.permitofficial import PermitOfficial
     import logging
-    """
-    def qr(session: Session) -> Any:
-        return session.query(
-            PermitOfficial.last_name,
-            PermitOfficial.title,
-            PermitOfficial.department,
-            PermitOfficial.city)
-    """
 
     try:
         db_manager = DatabaseManager.build()
@@ -72,5 +70,5 @@ async def query_permit_officials(request: Request):
         )
     except Exception as e:
         logging.error({str(e)})
-        return
+        return templates.TemplateResponse("/index")
 

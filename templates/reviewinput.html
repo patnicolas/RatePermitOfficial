@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./static/style.css" />
+    <title>Review input</title>
+</head>
+<body>
+<h4>Review input... </h4>
+<br>
+     <form action='http://localhost:8080/reviewinput/' method="post" name="fileForm" enctype="multipart/form-data">
+         Permit No. <input id="permit_id" type="text" name="permit" style="color:red; width:14em; text-align:left;font-size: 0.8em;background-color:lightgrey;padding: 0.2em 0.2em;font-style: italic;" value="enter permit no ...." /><br><br>
+         <label>Select Permit official</label>
+         <select id="PermitOfficialDropdown" value="John Doe"></select><br>
+         <label>Key Performance Indicator <i>Enter value 1 to 5</i></i></label><br>
+         <label>Helpfulness</label><input id="helpfulness_id" type="number" min="1" max="5" step="1" value="1"/><br>
+         <label>Consistency</label><input id="consistency_id" type="number" min="1" max="5" step="1" value="1" /><br>
+         <label>Responsiveness</label><input id="responsiveness_id" type="number" min="1" max="5" step="1" value="1" /><br>
+         <label>Cost</label><input id="cost_id" type="number" min="1" max="5" step="1" value="1" /><br>
+         <label for="comment">Comment</label><br>
+         <textarea id="comment"></textarea><br>
+         <button id="submit_id" type="Submit">Submit</button>
+        </form>
+
+ <script type="text/javascript"  src="./static/script.js"></script>
+</body>
+</html>
