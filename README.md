@@ -66,6 +66,33 @@ Python interpreter and modules ...
 ![Data base schema](images/Project_Schema_01.png)
 
 
+## Local deployment (MacOS)
+PostgreSQL version 16
+### Service management
+brew services start postgresql    
+brew services restart postgresql     
+brew services stop postgresql     
+brew services info postgresql    
+
+### Role management
+psql -U postgres   
+username = pat_nicolas
+CREATE ROLE $username WITH LOGIN PASSWORD 'xxxxx';    
+ALTER ROLE $username WITH superuser;  
+ALTER ROLE $username WITH createdb;         
+\du    # To list current roles
+
+### Create database
+database = test_rating          
+CREATE DATABASE $database OWNER $username;       
+GRANT ALL PRIVILEGES ON DATABAE $database TO $username
+
+### Manage tables
+psql -U $username -d $database     
+\dt    
+_Tables are created through Python SQL Alchemy module_
+
+
 ## Implementation updates
 
 | Date     | Changes                                                                     |

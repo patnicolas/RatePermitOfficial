@@ -5,13 +5,11 @@ from sqlalchemy.orm import Session
 from src.db.kpi import KPI
 from src.db.permitofficial import PermitOfficial
 from typing import Any, NoReturn
-import datetime
 
 
 class DatabaseManagerTest(unittest.TestCase):
     database_manager: DatabaseManager = None
 
-    @unittest.skip('Ignore')
     def test_init(self):
         DatabaseManagerTest.__create_database_manager()
         print(str(DatabaseManagerTest.database_manager))
@@ -29,6 +27,7 @@ class DatabaseManagerTest(unittest.TestCase):
         DatabaseManagerTest.__create_database_manager()
         DatabaseManagerTest.database_manager.delete_all()
 
+    @unittest.skip('Ignore')
     def test_query_join(self):
         DatabaseManagerTest.__create_database_manager()
 

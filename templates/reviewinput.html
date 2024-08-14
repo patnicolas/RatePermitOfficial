@@ -19,7 +19,8 @@
         </tr>
         <tr>
             <td><label>Select Permit official</label></td>
-            <td><select id="PermitOfficialDropdown"></select></td>
+            <td><select id="permitOfficialsList" name="permitOfficialsList"></select></td>
+            <option value =
         </tr>
         <tr>
             <td>Key Performance Indicator</td>
@@ -55,7 +56,31 @@
     </div>
 </form>
 
+<script>
+ const words = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape'];
 
+        // Get the select DOM element
+        const wordSelect = document.getElementById('wordSelect');
+
+        // Function to load words into the select element
+        function loadWordsIntoSelect(wordList, selectElement) {
+            wordList.forEach(word => {
+                // Create a new option element
+                const option = document.createElement('option');
+                // Set the value and text of the option element
+                option.value = word;
+                option.textContent = word;
+                // Add the option to the select element
+                selectElement.appendChild(option);
+            });
+        }
+
+        // Load the words into the select element
+        loadWordsIntoSelect(words, wordSelect);
+
+</script>
+<!--
  <script type="text/javascript"  src="./static/script.js"></script>
+ -->
 </body>
 </html>

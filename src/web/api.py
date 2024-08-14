@@ -76,6 +76,7 @@ async def query_permit_officials(request: Request) -> templates.TemplateResponse
 
 """ ----------------------   Supporting helper methods ----------------------- """
 
+
 def __get_db() -> Optional[DatabaseManager]:
     import logging
     try:
