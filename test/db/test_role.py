@@ -18,6 +18,7 @@ class RoleTest(unittest.TestCase):
         count = RoleTest.database_manager.query_count(Role.id)
         self.assertEqual(count, 3)
 
+
     def test_role_query(self):
         RoleTest.__create_database_manager()
 

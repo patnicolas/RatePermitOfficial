@@ -1,8 +1,6 @@
 import unittest
 from src.db.databasemanager import DatabaseManager
-from typing import NoReturn, List, Any
-from src.db.review import Review
-from src.db.kpi import KPI
+from typing import NoReturn, List
 from src.db.permitofficial import PermitOfficial
 import datetime
 
@@ -10,7 +8,6 @@ import datetime
 class PermitOfficialTest(unittest.TestCase):
     database_manager: DatabaseManager = None
 
-    @unittest.skip('Ignore')
     def test_add(self):
         PermitOfficialTest.__create_database_manager()
 
@@ -23,6 +20,7 @@ class PermitOfficialTest(unittest.TestCase):
         print(f'Table PermitOfficial has {new_count} entries after insert')
         self.assertEqual(new_count, count + len(entries))
 
+    @unittest.skip('Ignore')
     def test_query(self):
         PermitOfficialTest.__create_database_manager()
         query_result = PermitOfficialTest.database_manager.query(

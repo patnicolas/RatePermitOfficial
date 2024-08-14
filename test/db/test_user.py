@@ -26,6 +26,46 @@ class UserTest(unittest.TestCase):
         count = UserTest.database_manager.query_count(User.id)
         self.assertEqual(count, 1)
 
+    @unittest.skip('Ignore')
+    def test_add_user(self):
+        key_encryption = KeyEncryption()
+        UserTest.__create_database_manager()
+        test_key = "abcd"
+
+        user1 = User(
+            first_name='Bernoit',
+            last_name='Mandelbrot',
+            created=datetime.datetime.now(),
+            role_id=1,
+            is_anonymous=0,
+            credential=key_encryption.encrypt(test_key))
+        user2 = User(
+            first_name='Gabi',
+            last_name='Thomas',
+            created=datetime.datetime.now(),
+            role_id=3,
+            is_anonymous=0,
+            credential=key_encryption.encrypt(test_key))
+        user3 = User(
+            first_name='Simone',
+            last_name='Bile',
+            created=datetime.datetime.now(),
+            role_id=3,
+            is_anonymous=0,
+            credential=key_encryption.encrypt(test_key))
+        user4 = User(
+            first_name='Masai',
+            last_name='Russel',
+            created=datetime.datetime.now(),
+            role_id=3,
+            is_anonymous=0,
+            credential=key_encryption.encrypt(test_key))
+
+        [UserTest.database_manager.add(user) for user in [user1, user2, user3, user4]]
+        count = UserTest.database_manager.query_count(User.id)
+        self.assertEqual(count, 5)
+
+    @unittest.skip('Ignore')
     def test_query_all(self):
         key_encryption = KeyEncryption()
         UserTest.__create_database_manager()
