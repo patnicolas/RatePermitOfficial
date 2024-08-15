@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from src.db.databasemanager import DatabaseManager
-from typing import Optional, AnyStr, NoReturn
+from typing import Optional, AnyStr
 import logging
 from src.web.reviewdata import ReviewData
 
@@ -36,8 +36,10 @@ templates = Jinja2Templates(directory=_dir)
 
 root_id='index'
 review_input_id='reviewinput'
-permit_officials_id='permitofficials'
+query_permit_officials_id='permitofficials'
 post_review_id='postreview'
+query_reviews_id = "reviews"
+query_users_id="users"
 
 
 """ ------------------  Default landing page ---------------------- """
@@ -62,7 +64,7 @@ async def post_review(review_data: ReviewData) -> templates.TemplateResponse:
         logging.info(f'Review\n{str(review_data)}')
         database_manager = DatabaseManager.build()
         database_manager.add_review(review_data)
-        return HTMLResponse(content='New review has been added to Review table', status_code=200)
+        return HTMLResponse(content=f'Review\n{str(review_data)}\nhas been added to Review table', status_code=200)
 
     except Exception as e:
         logging.error(f'Post review failed {str(e)}')
@@ -79,7 +81,7 @@ async def query_review_input() -> AnyStr:
     return html_content
 
 
-@app.get(f"/{permit_officials_id}", response_class=HTMLResponse)
+@app.get(f"/{query_permit_officials_id}", response_class=HTMLResponse)
 async def query_permit_officials(request: Request) -> templates.TemplateResponse:
     """
     Query the current list of permit officials for debugging purpose
@@ -95,18 +97,63 @@ async def query_permit_officials(request: Request) -> templates.TemplateResponse
         db_manager = DatabaseManager.build()
         permit_officials = db_manager.query(DatabaseManager.q_permit_officials, condition=PermitOfficial.id < 1000)
         return templates.TemplateResponse(
-            f"/{permit_officials_id}.html",
-            {'request': request, permit_officials_id: permit_officials}
+            f"/{query_permit_officials_id}.html",
+            {'request': request, query_permit_officials_id: permit_officials}
         )
     except Exception as e:
         logging.error({str(e)})
         return templates.TemplateResponse("/index")
 
 
+@app.get(f"/{query_users_id}", response_class=HTMLResponse)
+async def query_users(request: Request) -> templates.TemplateResponse:
+    """
+    Query the current list of users for debugging purpose
+    :param request: Web HTTP request
+    :type request: Request
+    :return: HTML response using Jinja2 template
+    :rtype: TemplateResponse
+    """
+    from src.db.user import User
+    import logging
+
+    try:
+        db_manager = DatabaseManager.build()
+        users = db_manager.query(DatabaseManager.q_users, condition= User.id < 1000)
+        return templates.TemplateResponse(
+            f"/{query_users_id}.html",
+            {'request': request, query_users_id: users}
+        )
+    except Exception as e:
+        logging.error({str(e)})
+        return templates.TemplateResponse("/index")
+
+
+@app.get(f"/{query_reviews_id}", response_class=HTMLResponse)
+async def query_reviews(request: Request) -> templates.TemplateResponse:
+    """
+    Query the current list of reviews for debugging purpose
+    :param request: Web HTTP request
+    :type request: Request
+    :return: HTML response using Jinja2 template
+    :rtype: TemplateResponse
+    """
+    from src.db.review import Review
+    import logging
+
+    try:
+        db_manager = DatabaseManager.build()
+        reviews = db_manager.query(DatabaseManager.q_reviews, condition= Review.id < 1000)
+        return templates.TemplateResponse(
+            f"/{query_reviews_id}.html",
+            {'request': request, query_reviews_id: reviews}
+        )
+    except Exception as e:
+        logging.error({str(e)})
+        return templates.TemplateResponse("/index")
 
 
 """ ----------------------   Supporting helper methods ----------------------- """
-
 
 def __get_db() -> Optional[DatabaseManager]:
     import logging

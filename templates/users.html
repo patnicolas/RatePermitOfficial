@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./static/style.css" />
+    <title>Users List</title>
+</head>
+<body>
+   <h1>List of users:</h1>
+    <br>
+   <center>
+<table border="3" style="font-size: 16px; color:grey; background-color: white;">
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Since</th>
+    <th>Is Anonymous</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+      <td>{{ user.created_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.created }}</td>
+      <td>{{ user.is_anonymous }}</td>
+  </tr>
+  {% endfor %}
+</table>
+   </center>
+</body>
+</html>

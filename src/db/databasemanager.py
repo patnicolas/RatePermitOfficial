@@ -295,13 +295,13 @@ class DatabaseManager(object):
         return session.query(Review, KPI, PermitOfficial)
 
     @staticmethod
-    def q_permit_official_id(session: Session) -> Any:
-        return session.query(PermitOfficial.id)
-
-    @staticmethod
     def q_roles(session: Session) -> Any:
         return session.query(Role)
 
     @staticmethod
     def q_users(session: Session) -> Any:
         return session.query(User)
+
+    @staticmethod
+    def q_reviews(session: Session) -> Any:
+        return session.query(Review)

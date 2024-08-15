@@ -64,10 +64,12 @@ Python interpreter and modules ...
 
 ## Architecture
 ![Architecture](images/Architecture1.png)   
-There are 3 clients:
-- SQL for pre-populating some tables and unit test     
-- CURL for HTTP request/response testing
-- Web interface for deployment in production 
+   
+There are 4 clients:
+- __SQL__ Testing schema and pre-populating some tables   
+- __CURL__ Testing HTTP requests/responses (see paragraph below)
+- __Admin interface__ Monitoring data content
+- __User interface__ for deployment in production 
 
 ## Database schema
 ![Data base schema](images/Project_Schema_01.png)
@@ -106,7 +108,7 @@ Important note: _Tables are created through Python SQL Alchemy module_
 - File content can be also optionally encrypted using the same scheme.
 
 ### Command line interface
-__Landing page__
+#### Landing page
 
 curl \    
   --request GET \    
@@ -114,14 +116,30 @@ curl \
   --header 'Content-Type: text/plain'
 
 
-__List building permit officials__     
+#### List building permit officials  
 
 curl \   
   --request GET \    
   --url http://localhost:8089/permitofficials \     
-   --header 'Content-Type: application/json'        
+   --header 'Content-Type: text/plain'      
 
-__Posting a review__   
+#### List users 
+
+curl \   
+  --request GET \    
+  --url http://localhost:8089/users \     
+   --header 'Content-Type: text/plain'
+
+#### List reviews
+
+curl \   
+  --request GET \    
+  --url http://localhost:8089/reviews \     
+   --header 'Content-Type: text/plain'      
+
+
+
+#### Posting a review
    
 curl \   
   --request POST \
@@ -149,3 +167,4 @@ curl \
 | 08/05/24 | Javascript code to load list of existing building permit officials and select |
 | 08/13/24 | Automate creation and population of 5 database tables for testing purpose     |
 | 08/14/24 | Integration of HTTP request with database for input of reviews                |
+| 08/15/24 | First version of administrator interface |

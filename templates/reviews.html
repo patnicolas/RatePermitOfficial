@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./static/style.css" />
+    <title>Users List</title>
+</head>
+<body>
+    <h1>Reviews List</h1>
+    <br><center>
+<table border="3" style="font-size: 16px; color:grey; background-color: white;">
+  <tr>
+    <th>User name</th>
+    <th>Date</th>
+    <th>Permit</th>
+    <th>Comment</th>
+  </tr>
+  {% for review in reviews %}
+  <tr>
+      <td>{{ review.user_name }}</td>
+      <td>{{ review.date }}</td>
+      <td>{{ review.permit }}</td>
+      <td>{{ review.comment }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</center>
+</body>
+</html>
