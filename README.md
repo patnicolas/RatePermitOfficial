@@ -141,3 +141,4 @@ curl \
 | 08/02/24 | Implementation of join {Review, KPI, PermitOfficial} - Password Encryption.   |                                                                                                        |
 | 08/05/24 | Javascript code to load list of existing building permit officials and select |
 | 08/13/24 | Automate creation and population of 5 database tables for testing purpose     |
+| 08/14/24 | Integration of HTTP request with database for input of reviews                |

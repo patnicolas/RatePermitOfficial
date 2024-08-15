@@ -11,6 +11,7 @@ from src.db.role import Role
 from src.db.review import Review
 from src.db.permitofficial import PermitOfficial
 import logging
+from src.web.reviewdata import ReviewData
 
 """ Table types/classes used in the project """
 TableType = Review | Role | PermitOfficial | User | KPI
@@ -25,14 +26,13 @@ def load_password() -> AnyStr:
     from src.util.keyencryption import KeyEncryption
 
     key_encryption = KeyEncryption()
-    encrypted_password = ''
+    encrypted_password = b'gAAAAABmraC9-WtivAoSpMhPVIKP_Gam2GlisgzHp4hZHVRLQE09syHFUYPmVyiMvlMYsp14poJShCHutkfEdAzHoEWq7bNS3g=='
     return key_encryption.decrypt(encrypted_password)
 
 
 class DatabaseManager(object):
     """ Default password decrypted from a file"""
     default_password: AnyStr = load_password()
-    database_manager: Self = None
 
     def __init__(self,
                  _user_name: AnyStr,
@@ -54,10 +54,12 @@ class DatabaseManager(object):
         from src.db import Base
 
         self.database_url = f'postgresql://{_user_name}:{_password}@{_host}/{_db_name}'
-        self.metadata = MetaData()
         self.engine = create_engine(self.database_url)
         self.session = self.create_session()
+        """
+        self.metadata = MetaData()
         Base.metadata.create_all(bind=self.engine)
+        """
 
     @classmethod
     def build(cls) -> Self:
@@ -72,7 +74,10 @@ class DatabaseManager(object):
         _password = configuration_parameters['password']
         _db_name = configuration_parameters['db_name']
         _host = configuration_parameters['host']
+
         return cls(_user_name, _password, _db_name, _host)
+
+        # return DatabaseManager.database_manager
 
     def create_session(self) -> Session:
         """
@@ -94,6 +99,7 @@ class DatabaseManager(object):
         """
         self.session.close()
 
+    """
     @staticmethod
     def create_database_manager() -> NoReturn:
         if DatabaseManager.data_manager is None:
@@ -102,6 +108,7 @@ class DatabaseManager(object):
             db_name = 'test_rating'
             DatabaseManager.data_manager = DatabaseManager(user_name, password, db_name)
         return DatabaseManager.data_manager
+    """
 
     def add(self, _entry: TableType) -> TableType:
         """
@@ -217,6 +224,34 @@ class DatabaseManager(object):
         except Exception as e:
             logging.error(f'Query join with {str(e)}')
             return None
+
+
+    def add_review(self, review_data: ReviewData):
+        import datetime
+
+        logging.info(f'Initialize database {self.__str__()}')
+        kpi_entry = KPI(
+            helpfulness=review_data.helpfulness,
+            consistency=review_data.consistency,
+            responsiveness=review_data.responsiveness,
+            cost=review_data.cost)
+        kpi_entry_resp = self.add(kpi_entry)
+        kpi_id = kpi_entry_resp.id
+
+        official_ids = self.query(
+            DatabaseManager.q_permit_official_id,
+            PermitOfficial.last_name == review_data.permitofficial
+        )
+        official_id = official_ids[0][0]
+        review_entry = Review(
+            date=datetime.datetime.now(),
+            user_name='Patrick',
+            permit=review_data.permit,
+            comment=review_data.comment,
+            kpi_id=kpi_id,
+            permit_official_id=official_id
+        )
+        self.add(review_entry)
 
     """ ----------------------   Query stubs --------------------- """
 

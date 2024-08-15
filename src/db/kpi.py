@@ -2,7 +2,7 @@ __author__ = "Patrick Nicolas"
 __copyright__ = "Copyright 2024  All rights reserved."
 
 from src.db import Base
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer
 
 
 class KPI(Base):
