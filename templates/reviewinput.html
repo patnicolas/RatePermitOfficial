@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="application/json; charset=UTF-8">
         <!-- Stylesheet -->
     <link rel="stylesheet" type="text/css" href="./static/style.css" />
     <title>Review input</title>
@@ -10,51 +10,30 @@
 <br>
         <h1>Review input... </h1>
 
-<form action='http://localhost:8080/reviewinput/' method="post" name="fileForm" enctype="multipart/form-data">
-    <div style="margin: auto;width: 100%;">
-    <table style="font-size: 16px; border:3px;color:grey; background-color:#fffddb;width:420px">
-        <tr>
-            <td>Permit No. </td>
-            <td><input id="permit_id" type="text" name="permit" style="color:red; width:14em; text-align:left;font-size: 0.8em;background-color:lightgrey;padding: 0.2em 0.2em;font-style: italic;" value="enter permit no ...." /></td>
-        </tr>
-        <tr>
-            <td><label>Select Permit official</label></td>
-            <td><select id="permitOfficialsList" name="permitOfficialsList"></select></td>
-            <option value =
-        </tr>
-        <tr>
-            <td>Key Performance Indicator</td>
-            <td><i>Enter value 1 to 5</i></td>
-        </tr>
-        <tr>
-            <td><label>Helpfulness</label></td>
-            <td><input id="helpfulness_id" type="number" min="1" max="5" step="1" value="1"/></td>
-        </tr>
-        <tr>
-            <td><label>Consistency</label></td>
-            <td><input id="consistency_id" type="number" min="1" max="5" step="1" value="1" /></td>
-        </tr>
-        <tr>
-            <td><label>Responsiveness</label></td>
-            <td><input id="responsiveness_id" type="number" min="1" max="5" step="1" value="1" /></td>
-        </tr>
-        <tr>
-            <td><label>Cost</label></td>
-            <td><input id="cost_id" type="number" min="1" max="5" step="1" value="1" /></td>
-        </tr>
-    </table>
 
-    <label>Comment</label><br>
-
-    <textarea id="comment" style="background-color:#fffddb;color:grey;font-size:14px;height:200px;width:400px;border-radius: 4px; padding: 6px 12px;margin: auto;">Enter comment up to 500 characters ....</textarea><br>
-        <table style="border:0px;">
-        <tr>
-            <td><button class="button1" id="submit_id" type="Submit">Submit</button></td>
-            <td><button class="button1" id="reset_id">Reset</button></td>
-        </tr>
-    </table>
-    </div>
+<form action='/postreview' method="post" enctype="application/x-www-form-urlencoded">
+    <label for="permitofficial_id">Permit Official:</label>
+    <select id="permitofficial_id" name="permitOfficials">
+        <option value ='Lady Gaga'>LadyGaga</option>
+        <option value ='Simone Bile'>SimoneBile</option>
+        <option value ='Noah Lyle'>SimoneBile</option>
+    </select><br><br>
+    <label for="permit_id">Permit ID:</label>
+    <input id="permit_id" type="text" name="permit" style="color:red; width:14em; text-align:left;font-size: 0.8em;background-color:lightgrey;padding: 0.2em 0.2em;font-style: italic;" value="a" /><br><br>
+    <label for="helpfulness_id">helpfulness:</label>
+    <input id="helpfulness_id" type="number" name="helpfulness" min="1" max="5" step="1" value="1"><br><br>
+    <label for="consistency_id">Consistency:</label>
+    <input id="consistency_id" type="number" name="consistency" min="1" max="5" step="1" value="1"><br><br>
+    <label for="responsiveness_id">Responsiveness:</label>
+    <input id="responsiveness_id" type="number" name="responsiveness" min="1" max="5" step="1" value="1"><br><br>
+    <label for="cost_id">Cost:</label>
+    <input id="cost_id" type="number" name="cost" min="1" max="5" step="1" value="1"><br><br>
+    <label for="comment_id">Comment:</label><br>
+    <textarea id="comment_id" name="comment" style="background-color:#fffddb;color:grey;font-size:14px;height:200px;width:400px;border-radius: 4px; padding: 6px 12px;margin: auto;">Enter comment up to 500 characters ....</textarea><br>
+    <br><br>
+    <input class="button1" type="submit" value="Submit">
 </form>
+
 
 <script>
  const words = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape'];

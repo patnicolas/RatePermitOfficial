@@ -65,7 +65,7 @@ class DatabaseManagerTest(unittest.TestCase):
     def __create_database_manager() -> NoReturn:
         if DatabaseManagerTest.database_manager is None:
             user_name = 'pat_nicolas'
-            password = 'Yge_1908'
+            password = DatabaseManager.default_password
             db_name = 'test_rating'
             DatabaseManagerTest.database_manager = DatabaseManager(user_name, password, db_name)
 

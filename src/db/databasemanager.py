@@ -18,21 +18,21 @@ TableType = Review | Role | PermitOfficial | User | KPI
 
 def load_password() -> AnyStr:
     """
-    Load and decrypte an encrypted password from a file
+    Load and decrypted an encrypted password from a file
     :return: Decrypted password
     :rtype: Str
     """
     from src.util.keyencryption import KeyEncryption
 
     key_encryption = KeyEncryption()
-    encrypted_password = b'gAAAAABmraC9-WtivAoSpMhPVIKP_Gam2GlisgzHp4hZHVRLQE09syHFUYPmVyiMvlMYsp14poJShCHutkfEdAzHoEWq7bNS3g=='
+    encrypted_password = ''
     return key_encryption.decrypt(encrypted_password)
-
 
 
 class DatabaseManager(object):
     """ Default password decrypted from a file"""
     default_password: AnyStr = load_password()
+    database_manager: Self = None
 
     def __init__(self,
                  _user_name: AnyStr,
@@ -93,6 +93,15 @@ class DatabaseManager(object):
         create_session has to be called for subsequent calls
         """
         self.session.close()
+
+    @staticmethod
+    def create_database_manager() -> NoReturn:
+        if DatabaseManager.data_manager is None:
+            user_name = 'pat_nicolas'
+            password = DatabaseManager.default_password
+            db_name = 'test_rating'
+            DatabaseManager.data_manager = DatabaseManager(user_name, password, db_name)
+        return DatabaseManager.data_manager
 
     def add(self, _entry: TableType) -> TableType:
         """
@@ -226,6 +235,18 @@ class DatabaseManager(object):
             PermitOfficial.title,
             PermitOfficial.department,
             PermitOfficial.city)
+
+    @staticmethod
+    def q_permit_official_id(session: Session) -> int:
+        """
+        Default query for all the relevant fields of permit officials table
+        :param session: Current database session
+        :type session: sqlalchemy.orm.Session
+        :return: Result of the query
+        :rtype: Any
+        """
+        return DatabaseManager.q_permit_officials(session).id
+
 
     @staticmethod
     def q_reviews_kpi_permit_officials(session: Session) -> Any:

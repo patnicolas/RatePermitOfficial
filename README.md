@@ -69,18 +69,20 @@ Python interpreter and modules ...
 ## Local deployment (MacOS)
 PostgreSQL version 16
 ### Service management
-brew services start postgresql    
-brew services restart postgresql     
-brew services stop postgresql     
-brew services info postgresql    
+- brew services start postgresql    
+- brew services restart postgresql     
+- brew services stop postgresql     
+- brew services info postgresql    
 
 ### Role management
-psql -U postgres   
+__psql -U postgres__   
+
 username = pat_nicolas
-CREATE ROLE $username WITH LOGIN PASSWORD 'xxxxx';    
-ALTER ROLE $username WITH superuser;  
-ALTER ROLE $username WITH createdb;         
-\du    # To list current roles
+- CREATE ROLE $username WITH LOGIN PASSWORD 'xxxxx';    
+- ALTER ROLE $username WITH superuser;  
+- ALTER ROLE $username WITH createdb;  
+    
+__\du__    # psql command to list current roles
 
 ### Create database
 database = test_rating          
@@ -89,21 +91,53 @@ GRANT ALL PRIVILEGES ON DATABAE $database TO $username
 
 ### Manage tables
 psql -U $username -d $database     
-\dt    
-_Tables are created through Python SQL Alchemy module_
+__\dt__ Psql command to list tables    
+Important note: _Tables are created through Python SQL Alchemy module_
+
+### Password encryption
+- Passwords are encrypted using the __Fernet cryptography__     
+- File content can be also optionally encrypted using the same scheme.
+
+### Command line interface
+__Landing page__
+
+curl \    
+  --request GET \    
+  --url http://localhost:8089/ \    
+  --header 'Content-Type: text/plain'
+
+
+__List building permit officials__     
+
+curl \   
+  --request GET \    
+  --url http://localhost:8089/permitofficials \     
+   --header 'Content-Type: application/json'        
+
+__Posting a review__   
+   
+curl \   
+  --request POST \
+  --url http://localhost:8089/postreview \      
+  --header 'Content-Type: application/json' \
+  --data '{"permitofficial":"Lady Gaga", "permit":"43143", "helpfulness":2, "consistency":4, "responsiveness":3, "cost":2, "comment":"This is a comment for testing purpose"}'
+
+
+
 
 
 ## Implementation updates
 
-| Date     | Changes                                                                     |
-|:---------|:----------------------------------------------------------------------------|
-| 07/18/24 | Review requirements and estimates                                           |
-| 07/20/24 | PostgreSQL database and Gitub project setup                                 |    
-| 07/22/24 | Design schema for project.                                                  |    
-| 07/25/24 | Implementation Reviews, KPI, Users, Permit officials & Roles tables.        |
-| 07/26/24 | Implementation of CRUD functions for tables                                 |
-| 07/30/24 | Implementation of Fast API for loading building permits officials data      |
-| 07/31/24 | Implementation of index page with CSS style                                 | 
-| 08/01/24 | Implementation of permitofficials page                                      |
-| 08/02/24 | Implementation of join {Review, KPI, PermitOfficial} - Password Encryption. |                                                                                                        |
+| Date     | Changes                                                                       |
+|:---------|:------------------------------------------------------------------------------|
+| 07/18/24 | Review requirements and estimates                                             |
+| 07/20/24 | PostgreSQL database and Gitub project setup                                   |    
+| 07/22/24 | Design schema for project.                                                    |    
+| 07/25/24 | Implementation Reviews, KPI, Users, Permit officials & Roles tables.          |
+| 07/26/24 | Implementation of CRUD functions for tables                                   |
+| 07/30/24 | Implementation of Fast API for loading building permits officials data        |
+| 07/31/24 | Implementation of index page with CSS style                                   | 
+| 08/01/24 | Implementation of permitofficials page                                        |
+| 08/02/24 | Implementation of join {Review, KPI, PermitOfficial} - Password Encryption.   |                                                                                                        |
 | 08/05/24 | Javascript code to load list of existing building permit officials and select |
+| 08/13/24 | Automate creation and population of 5 database tables for testing purpose     |

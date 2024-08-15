@@ -2,7 +2,6 @@ import unittest
 from src.db.databasemanager import DatabaseManager
 from typing import NoReturn, List
 from src.db.permitofficial import PermitOfficial
-import datetime
 
 
 class PermitOfficialTest(unittest.TestCase):
