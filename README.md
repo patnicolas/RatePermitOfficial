@@ -62,6 +62,13 @@ Python interpreter and modules ...
 | __src/web__ | Web services API |
 | __src/util__ | Utilities classes |
 
+## Architecture
+![Architecture](images/Architecture1.png)   
+There are 3 clients:
+- SQL for pre-populating some tables and unit test     
+- CURL for HTTP request/response testing
+- Web interface for deployment in production 
+
 ## Database schema
 ![Data base schema](images/Project_Schema_01.png)
 
