@@ -75,9 +75,9 @@ There are 4 clients:
 ![Data base schema](images/Project_Schema_01.png)
 
 
-## Local deployment (MacOS)
+## Database
 PostgreSQL version 16
-### Service management
+### Service management for local deployment (MacOS)
 - brew services start postgresql    
 - brew services restart postgresql     
 - brew services stop postgresql     
@@ -96,7 +96,7 @@ __\du__    # psql command to list current roles
 ### Create database
 database = test_rating          
 CREATE DATABASE $database OWNER $username;       
-GRANT ALL PRIVILEGES ON DATABAE $database TO $username
+GRANT ALL PRIVILEGES ON DATABASE $database TO $username
 
 ### Manage tables
 psql -U $username -d $database     

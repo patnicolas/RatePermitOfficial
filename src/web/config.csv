@@ -1,7 +1,8 @@
 port,8089
+host,localhost
+log_level,debug
 web_path,src/web
 is_test,False
 admin,pat_nicolas
 password,Yge_1908
-host,localhost
 db_name,test_rating

@@ -1,6 +1,4 @@
-
-
-_author__ = "Patrick Nicolas"
+__author__ = "Patrick Nicolas"
 __copyright__ = "Copyright 2024. All rights reserved."
 
 from pydantic import BaseModel

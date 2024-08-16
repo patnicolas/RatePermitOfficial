@@ -11,16 +11,24 @@
     <br><center>
 <table border="3" style="font-size: 16px; color:grey; background-color: white;">
   <tr>
-    <th>User name</th>
-    <th>Date</th>
-    <th>Permit</th>
-    <th>Comment</th>
+    <th style="width: 8%">User name</th>
+    <th style="width: 8%">Date</th>
+    <th style="width: 8%">Permit</th>
+    <th style="width: 3%">Helpfulness</th>
+    <th style="width: 3%">Consistency</th>
+    <th style="width: 3%">Responsiveness</th>
+    <th style="width: 3%">Cost</th>
+    <th style="width: 64%">Comment</th>
   </tr>
   {% for review in reviews %}
   <tr>
       <td>{{ review.user_name }}</td>
       <td>{{ review.date }}</td>
       <td>{{ review.permit }}</td>
+      <td style="text-align: center;">{{ review.helpfulness }}</td>
+      <td style="text-align: center;">{{ review.consistency }}</td>
+      <td style="text-align: center;">{{ review.responsiveness }}</td>
+      <td style="text-align: center;">{{ review.cost }}</td>
       <td>{{ review.comment }}</td>
   </tr>
   {% endfor %}

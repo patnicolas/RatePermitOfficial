@@ -70,8 +70,6 @@ async def post_review(review_data: ReviewData) -> templates.TemplateResponse:
         logging.error(f'Post review failed {str(e)}')
         return HTMLResponse(content='Failed', status_code=500)
 
-
-
 """ -------------------  GET methods --------------------------- """
 
 @app.get(f"/{review_input_id}", response_class=HTMLResponse)
@@ -86,7 +84,7 @@ async def query_permit_officials(request: Request) -> templates.TemplateResponse
     """
     Query the current list of permit officials for debugging purpose
     :param request: Web HTTP request
-    :type request: Request
+    :type request: class Request
     :return: HTML response using Jinja2 template
     :rtype: TemplateResponse
     """
@@ -110,7 +108,7 @@ async def query_users(request: Request) -> templates.TemplateResponse:
     """
     Query the current list of users for debugging purpose
     :param request: Web HTTP request
-    :type request: Request
+    :type request: class Request
     :return: HTML response using Jinja2 template
     :rtype: TemplateResponse
     """
@@ -134,7 +132,7 @@ async def query_reviews(request: Request) -> templates.TemplateResponse:
     """
     Query the current list of reviews for debugging purpose
     :param request: Web HTTP request
-    :type request: Request
+    :type request: class Request
     :return: HTML response using Jinja2 template
     :rtype: TemplateResponse
     """

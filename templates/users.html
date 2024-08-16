@@ -12,17 +12,17 @@
    <center>
 <table border="3" style="font-size: 16px; color:grey; background-color: white;">
   <tr>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>First Name</th>
+    <th>last Name</th>
     <th>Since</th>
-    <th>Is Anonymous</th>
+    <th>Anonymous</th>
   </tr>
   {% for user in users %}
   <tr>
-      <td>{{ user.created_name }}</td>
+      <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
       <td>{{ user.created }}</td>
-      <td>{{ user.is_anonymous }}</td>
+      <td style="text-align: center;">{{ user.is_anonymous }}</td>
   </tr>
   {% endfor %}
 </table>

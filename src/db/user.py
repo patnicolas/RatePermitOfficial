@@ -15,6 +15,6 @@ class User(Base):
     last_name = Column(String, index=True, nullable=False)
     created = Column(Date, index=True, nullable=False)
     role_id = Column(Integer, ForeignKey('roles.id'))
-    is_anonymous = Column(Integer)
+    is_anonymous = Column(String, nullable=False)
     credential = Column('password', LargeBinary, nullable=False)        # Needs to be encrypted
 

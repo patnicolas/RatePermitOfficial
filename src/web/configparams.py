@@ -1,7 +1,7 @@
 __author__ = "Patrick Nicolas"
 __copyright__ = "Copyright 2024. All rights reserved."
 
-from typing import AnyStr, Dict, Optional
+from typing import AnyStr, Any, Dict, Optional
 
 
 class ConfigParams(object):
@@ -22,8 +22,9 @@ class ConfigParams(object):
                 rows = f.read().split("\n")
                 acc = {}
                 for row in rows:
-                    key_value = row.split(",")
-                    acc[key_value[0]] = key_value[1]
+                    if len(row) > 0:
+                        key_value = row.split(",")
+                        acc[key_value[0]] = key_value[1]
             return acc
         except FileNotFoundError as e:
             print(f'ERROR: {str(e)}')

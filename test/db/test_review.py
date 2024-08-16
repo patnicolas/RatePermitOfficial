@@ -2,7 +2,6 @@ import unittest
 from src.db.databasemanager import DatabaseManager
 from typing import NoReturn, AnyStr
 from src.db.review import Review
-from src.db.kpi import KPI
 from src.db.permitofficial import PermitOfficial
 import datetime
 
@@ -16,15 +15,6 @@ class ReviewTest(unittest.TestCase):
         try:
             ReviewTest.__create_database_manager()
             review_count = ReviewTest.database_manager.query_count(ReviewTest.id)
-            kpi_count = ReviewTest.database_manager.query_count(KPI.id)
-            print(f'Table Review has {review_count} and KPY has {kpi_count} entries prior insert')
-            kpi_entry = KPI(
-                helpfulness=random.randint(1, 5),
-                consistency=random.randint(1, 5),
-                responsiveness=random.randint(1, 5),
-                cost=random.randint(1, 5))
-            ReviewTest.database_manager.add(kpi_entry)
-
             officials_count = ReviewTest.database_manager.query_count(PermitOfficial.id)
             official_id = 1 if officials_count < 1 else officials_count-1
 
@@ -35,13 +25,16 @@ class ReviewTest(unittest.TestCase):
                 user_name=user,
                 permit=f'AP-10{permit_idx}',
                 comment=comment,
-                kpi_id=kpi_count-1,
+                helpfulness=random.randint(1, 5),
+                consistency=random.randint(1, 5),
+                responsiveness=random.randint(1, 5),
+                cost=random.randint(1, 5),
                 permit_official_id=official_id
             )
             ReviewTest.database_manager.add(review_entry)
             new_review_count = ReviewTest.database_manager.query_count(ReviewTest.id)
             print(f'Table Review has {ReviewTest.id} entries after insert')
-            # self.assertEqual(new_review_count, review_count + 1)
+            self.assertEqual(new_review_count, review_count + 1)
         except Exception as e:
             self.assertTrue(False, {str(e)})
 
