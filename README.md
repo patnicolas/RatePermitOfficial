@@ -108,7 +108,10 @@ Important note: _Tables are created through Python SQL Alchemy module_
 - File content can be also optionally encrypted using the same scheme.
 
 ### Command line interface
-#### Landing page
+#### Launching server
+uvicorn main:app --reload
+
+#### Query landing page
 
 curl \    
   --request GET \    
@@ -116,27 +119,26 @@ curl \
   --header 'Content-Type: text/plain'
 
 
-#### List building permit officials  
+#### Query list building permit officials  
 
 curl \   
   --request GET \    
   --url http://localhost:8089/permitofficials \     
    --header 'Content-Type: text/plain'      
 
-#### List users 
+#### Query list of users 
 
 curl \   
   --request GET \    
   --url http://localhost:8089/users \     
    --header 'Content-Type: text/plain'
 
-#### List reviews
+#### Query list of reviews
 
 curl \   
   --request GET \    
   --url http://localhost:8089/reviews \     
-   --header 'Content-Type: text/plain'      
-
+   --header 'Content-Type: text/plain'
 
 
 #### Posting a review
