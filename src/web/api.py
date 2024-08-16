@@ -151,6 +151,69 @@ async def query_reviews(request: Request) -> templates.TemplateResponse:
         return templates.TemplateResponse("/index")
 
 
+@app.get("/plotsX", response_class=HTMLResponse)
+async def query_plots_x(request: Request):
+    from matplotlib.figure import Figure
+    import matplotlib.pyplot as plt
+    from io import BytesIO
+    try:
+        fig = Figure()
+        ax = fig.subplots()
+        ax.plot([1, 2, 3, 4], [10, 20, 25, 30])
+        ax.set_title("Sample Plot")
+        ax.set_xlabel("X Axis")
+        ax.set_ylabel("Y Axis")
+
+        # Save the plot to a BytesIO object
+        buf = BytesIO()
+        fig.savefig(buf, format="png")
+        buf.seek(0)
+        buf_value = buf.getvalue()
+        # data = buf.getvalue().decode("latin1")
+        data = buf.getvalue().decode("UTF-8")
+
+        # Create a matplotlib figure
+        """
+        plt.plot([1, 2, 3, 4], [10, 20, 25, 30])
+        plt.title("Sample Plot")
+        plt.xlabel("X Axis")
+        plt.ylabel("Y Axis")
+        plot_filename = "plots/plots.png"
+        plt.savefig(fname=plot_filename)
+        """
+
+
+
+
+        # Render the HTML template and embed the image
+        rendered_images = templates.TemplateResponse("plots.html", {"request": request, "plots": data})
+        return rendered_images
+    except Exception as e:
+        logging.error(f'Query plots failed: {str(e)}')
+        return templates.TemplateResponse("/index")
+
+
+@app.get("/plots", response_class=HTMLResponse)
+async def query_plots(request: Request):
+    import matplotlib.pyplot as plt
+    try:
+
+        plt.plot([1, 2, 3, 4], [10, 20, 25, 30])
+        plt.title("Sample Plot")
+        plt.xlabel("X Axis")
+        plt.ylabel("Y Axis")
+        plot_filename = "static/plots/plots1.png"
+        plt.savefig(fname=plot_filename)
+
+
+        # Render the HTML template and embed the image
+        rendered_images = templates.TemplateResponse("plots.html", {"request": request})
+        return rendered_images
+    except Exception as e:
+        logging.error(f'Query plots failed: {str(e)}')
+        return templates.TemplateResponse("/index")
+
+
 """ ----------------------   Supporting helper methods ----------------------- """
 
 def __get_db() -> Optional[DatabaseManager]:

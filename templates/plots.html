@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+            <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./static/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot Display</title>
+</head>
+<body>
+    <h1>Matplotlib Plot in FastAPI</h1>
+
+    <img src="{{ url_for('static', path='plots/plots1.png') }}">
+    <!--
+    <img src="data:image/png;base64,{{ plots }}" alt="Plots", width="400" height="400">
+    -->
+</body>
+</html>
