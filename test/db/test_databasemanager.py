@@ -31,13 +31,6 @@ class DatabaseManagerTest(unittest.TestCase):
     def test_query_join(self):
         DatabaseManagerTest.__create_database_manager()
 
-
-        def q1(session: Session) -> Any:
-            return session.query(Review, PermitOfficial)
-
-        def q2(session: Session) -> Any:
-            return session.query(Review, KPI, PermitOfficial)
-
         results = DatabaseManagerTest.database_manager.query_join(
             DatabaseManager.q_reviews_kpi_permit_officials,
             Review.permit_official_id == PermitOfficial.id and Review.kpi_id == KPI.id)
@@ -50,6 +43,26 @@ class DatabaseManagerTest(unittest.TestCase):
                      f'{permit_official.title} {permit_official.city}'
             print(output)
 
+    @unittest.skip('Ignored')
+    def test_count(self):
+        from src.db.review import Review
+        DatabaseManagerTest.__create_database_manager()
+        results = DatabaseManagerTest.database_manager.query(DatabaseManager.q_reviews_profile, Review.id < 1000)
+        dates = []
+        review_counts = []
+        for date, review_count in results:
+            dates.append(date)
+            review_counts.append(review_count)
+            print(f'\nDate: {str(date)}, Count: {review_count}')
+        self.assertTrue(len(results) > 0)
+
+    def test_permit_official_metrics(self):
+        from src.db.review import Review
+        DatabaseManagerTest.__create_database_manager()
+        results = DatabaseManagerTest.database_manager.query(DatabaseManager.q_permit_official_metrics, Review.id < 1000)
+        for permit_official_id, avg_helpfulness, avg_consistency, avg_responsiveness, avg_cost in results:
+            permit_officials =  DatabaseManagerTest.database_manager.query(DatabaseManager.q_permit_officials, PermitOfficial.id ==permit_official_id)
+            print(f'avg_helpfulness: {avg_helpfulness} Official: {permit_officials[0].last_name} {permit_officials[0].city}')
 
 
     """ --------------------  Supporting methods ------------------ """

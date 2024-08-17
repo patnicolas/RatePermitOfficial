@@ -9,7 +9,6 @@ import datetime
 class ReviewTest(unittest.TestCase):
     database_manager: DatabaseManager = None
 
-    @unittest.skip('Ignore')
     def test_add(self):
         import random
         try:

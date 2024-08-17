@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from src.db.databasemanager import DatabaseManager
-from typing import Optional, AnyStr
+from typing import Optional, AnyStr, List
 import logging
 from src.web.reviewdata import ReviewData
 
@@ -154,7 +154,7 @@ async def query_reviews(request: Request) -> templates.TemplateResponse:
 @app.get("/plotsX", response_class=HTMLResponse)
 async def query_plots_x(request: Request):
     from matplotlib.figure import Figure
-    import matplotlib.pyplot as plt
+
     from io import BytesIO
     try:
         fig = Figure()
@@ -196,13 +196,42 @@ async def query_plots_x(request: Request):
 @app.get("/plots", response_class=HTMLResponse)
 async def query_plots(request: Request):
     import matplotlib.pyplot as plt
-    try:
+    import numpy as np
 
-        plt.plot([1, 2, 3, 4], [10, 20, 25, 30])
-        plt.title("Sample Plot")
-        plt.xlabel("X Axis")
-        plt.ylabel("Y Axis")
+    try:
+        db_manager = DatabaseManager.build()
+
+        plt.rcParams['font.family'] = 'serif'  # Set the font family
+        plt.rcParams['font.serif'] = ['Times New Roman']  # Set the specific font
+        plt.rcParams['font.size'] = 8  # Set the font size
+
+        dates, frequencies = get_reviews_profile(db_manager)
+
+        fig, (ax1, ax2) = plt.subplots(2, 1)
+
+        ax1.bar(dates, frequencies, color='magenta', edgecolor='black')
+        ax1.set_title("Reviews profile")
+        ax1.set_xlabel("Dates")
+        ax1.set_ylabel("Number of reviews")
+
+        permit_officials, kips = get_permit_official_metrics(db_manager)
+        x = np.arange(len(permit_officials))
+        width = 0.2
+        bars1 = ax2.bar(x - 1.5*width, kips[0], width, label='Helpfulness')
+        bars2 = ax2.bar(x - 0.5 * width, kips[1], width, label='Consistency')
+        bars3 = ax2.bar(x + 0.5 * width, kips[2], width, label='Responsiveness')
+        bars4 = ax2.bar(x + 1.5 * width,kips[3], width, label='Cost')
+        ax2.set_title("Average KPIs")
+        ax2.set_xlabel("Permit officials")
+        ax2.set_ylabel("KIPs")
+
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(permit_officials)
+        ax2.legend()
+
+
         plot_filename = "static/plots/plots1.png"
+        plt.tight_layout()
         plt.savefig(fname=plot_filename)
 
 
@@ -212,6 +241,43 @@ async def query_plots(request: Request):
     except Exception as e:
         logging.error(f'Query plots failed: {str(e)}')
         return templates.TemplateResponse("/index")
+
+
+@staticmethod
+def get_reviews_profile(db_manager: DatabaseManager) -> (List[AnyStr], List[int]):
+    from src.db.review import Review
+    results = db_manager.query(DatabaseManager.q_reviews_profile, Review.id < 1000)
+    dates = []
+    frequencies = []
+    for date, frequency in results:
+        dates.append(str(date))
+        frequencies.append(int(frequency))
+    return dates, frequencies
+
+
+@staticmethod
+def get_permit_official_metrics(db_manager: DatabaseManager) -> (List[AnyStr], List[List[float]]):
+    from src.db.review import Review
+    from src.db.permitofficial import PermitOfficial
+
+    permit_officials_list = []
+    helpfulness_list = []
+    consistency_list = []
+    responsiveness_list = []
+    cost_list = []
+    results = db_manager.query(DatabaseManager.q_permit_official_metrics, Review.id < 1000)
+    for permit_official_id, avg_helpfulness, avg_consistency, avg_responsiveness, avg_cost in results:
+        permit_officials = db_manager.query(
+            DatabaseManager.q_permit_officials,
+            PermitOfficial.id == permit_official_id)
+        permit_officials_list.append(f'{permit_officials[0].last_name}: {permit_officials[0].city}')
+        helpfulness_list.append(avg_helpfulness)
+        consistency_list.append(avg_consistency)
+        responsiveness_list.append(avg_responsiveness)
+        cost_list.append(avg_cost)
+    return permit_officials_list, [helpfulness_list, consistency_list, responsiveness_list, cost_list]
+
+
 
 
 """ ----------------------   Supporting helper methods ----------------------- """

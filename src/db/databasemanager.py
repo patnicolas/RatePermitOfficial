@@ -198,7 +198,8 @@ class DatabaseManager(object):
         """
         try:
             q_res = q(self.session)
-            return q_res.filter(condition).all()
+            result = q_res.filter(condition).all() if condition is not None else q_res.all()
+            return result
         except Exception as e:
             logging.error(f'Query fields with {str(e)}')
             return None
@@ -305,3 +306,25 @@ class DatabaseManager(object):
     @staticmethod
     def q_reviews(session: Session) -> Any:
         return session.query(Review)
+
+    @staticmethod
+    def q_reviews_profile(session: Session) -> Any:
+        from sqlalchemy import func
+        res = session.query(
+            Review.date,
+            func.count(Review.id).label('review_count')
+        ).group_by(Review.date).order_by(Review.date)
+        return res
+
+    @staticmethod
+    def q_permit_official_metrics(session: Session) -> Any:
+        from sqlalchemy import func
+        res = session.query(
+            Review.permit_official_id,
+            func.avg(Review.helpfulness).label('avg_helpfulness'),
+            func.avg(Review.consistency).label('avg_consistency'),
+            func.avg(Review.responsiveness).label('avg_responsiveness'),
+            func.avg(Review.cost).label('avg_cost')
+        ).group_by(Review.permit_official_id)
+        return res
+
